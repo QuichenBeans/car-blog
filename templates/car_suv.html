@@ -1,0 +1,60 @@
+{% extends 'car_type.html' %}
+
+{% block title %}SUVs{% endblock %}
+
+{% block header %}
+    <h1>Conquer Any Terrain: The Best SUVs of 2025</h1>
+{% endblock %}
+
+{% block nav_extra %}{% endblock %}
+
+{% block content %}
+<div>
+    <p>SUVs are fantastic vehicles that combine style, comfort, and versatility, making them perfect 
+        for families and adventurers alike. Their higher ground clearance and robust build provide excellent 
+        safety on the road, giving drivers a confident feel in various driving conditions. With advanced 
+        safety features and spacious interiors, SUVs offer both peace of mind and plenty of room for 
+        passengers and cargo, making them a reliable and practical choice for many.</p>
+    <p>Here is a list of SUVs that could be a perfect fit for you!</p>
+    <div>
+        <ul>
+            {% for key, value in vehicle4.items() %}
+            <li>{{ key|capitalize }}: {{ value }}</li>
+            {% endfor %}
+        </ul>
+        <div>
+            {% for img in rr %}
+                <img src="{{ url_for('static', filename=img) }}">
+            {% endfor %}
+        </div>
+    </div>
+    <div>
+        <ul>
+            {% for key, value in vehicle5.items() %}
+            <li>{{ key|capitalize }}: {{ value }}</li>
+            {% endfor %}
+        </ul>
+        <div>
+            {% for img in toya %}
+                <img src="{{ url_for('static', filename=img) }}">
+            {% endfor %}
+        </div>
+    </div>
+    <div>
+        <ul>
+            {% for key, value in vehicle6.items() %}
+            <li>{{ key|capitalize }}: {{ value }}</li>
+            {% endfor %}
+        </ul>
+        <div>
+            {% for img in jeep %}
+                <img src="{{ url_for('static', filename=img) }}">
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+    <footer>{{ super() }}</footer>
+{% endblock %}

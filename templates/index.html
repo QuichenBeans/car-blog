@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>{% block title %}Home{% endblock %}</title>
+</head>
+<body>
+    <nav class="nav-bar">
+        <ul>
+            <li><a href='/'>Home</a></li>
+            <li><a href='/car_type'>Types of Car</a></li>
+            <li><a href='/account'>Account Details</a></li>
+            <li><a href='/logout'>Logout</a></li>
+        </ul>
+    </nav>
+    <main class="main-content-index">
+        {% block header %}
+        <div class="index-header">
+            <h1>Shifting Opinions</h1>
+            <p>A blog about car types with a difference</p>
+        </div>
+        {% endblock %}
+
+        {% block content %}
+        <div class="index-content">
+            <p>Whether you're a car enthusiast or just curious about different vehicles, you’ve come to the right place. 
+                In this blog, we’ll explore the wide world of cars—from practical hatchbacks perfect for city driving to rugged SUVs built for adventure, 
+                and from jaw-dropping supercars that redefine speed to cutting-edge electric vehicles (EVs) shaping the future of mobility.
+                Each car type has its own strengths, design philosophy, and driving experience. 
+                So buckle up as we break down what makes these vehicles unique and help you find the perfect ride for your needs!</p>
+        </div>
+        {% endblock %}
+
+        {% block nav_extra %}{% endblock %}
+    </main>
+    {% block footer %}
+    <div class="footer">
+        <div class="footer-nav-bar">
+            <nav>
+                <ul>
+                    <li><a href='/'>Home</a></li>
+                    <li><a href='/car_type'>Types of Car</a></li>
+                    <li><a href='/account'>Account Details</a></li>
+                    <li><a href='/logout'>Logout</a></li>
+                </ul>
+                <p class="footer-p">The purpose of this blog is for my own practise, all of the information provided is fictional.</p>
+            </nav>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

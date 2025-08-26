@@ -1,0 +1,60 @@
+{% extends 'car_type.html' %}
+
+{% block title %}SUVs{% endblock %}
+
+{% block header %}
+    <h1>Beyond Limits: The World’s Finest Supercars</h1>
+{% endblock %}
+
+{% block nav_extra %}{% endblock %}
+
+{% block content %}
+<div>
+    <p>Supercars are the ultimate expression of speed and style, built to deliver an exhilarating 
+        driving experience. With their powerful engines and sleek designs, they offer a thrilling 
+        rush like no other, making every twist and turn on the road feel like an adrenaline-packed adventure. 
+        The roar of the engine and the lightning-fast acceleration make driving a supercar pure excitement, perfect for those 
+        who crave the thrill of speed and precision.</p>
+    <p>If you love speed and style, you’ve got to check out supercars—they’re pure adrenaline on wheels! Have a look at some below:</p>
+    <div>
+        <ul>
+            {% for key, value in vehicle7.items() %}
+            <li>{{ key|capitalize }}: {{ value }}</li>
+            {% endfor %}
+        </ul>
+        <div>
+            {% for img in ferr %}
+                <img src="{{ url_for('static', filename=img) }}">
+            {% endfor %}
+        </div>
+    </div>
+    <div>
+        <ul>
+            {% for key, value in vehicle8.items() %}
+            <li>{{ key|capitalize }}: {{ value }}</li>
+            {% endfor %}
+        </ul>
+        <div>
+            {% for img in ast %}
+                <img src="{{ url_for('static', filename=img) }}">
+            {% endfor %}
+        </div>
+    </div>
+    <div>
+        <ul>
+            {% for key, value in vehicle9.items() %}
+            <li>{{ key|capitalize }}: {{ value }}</li>
+            {% endfor %}
+        </ul>
+        <div>
+            {% for img in mc %}
+                <img src="{{ url_for('static', filename=img) }}">
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+    <footer>{{ super() }}</footer>
+{% endblock %}

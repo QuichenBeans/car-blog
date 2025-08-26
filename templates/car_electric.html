@@ -1,0 +1,58 @@
+{% extends 'car_type.html' %}
+
+{% block title %}EVs{% endblock %}
+
+{% block header %}
+    <h1>Zero Emissions, Maximum Thrills: Top EVs of 2025</h1>
+{% endblock %}
+
+{% block nav_extra %}{% endblock %}
+
+{% block content %}
+<div>
+    <p>Electric cars are an excellent choice for the environment, producing zero emissions and helping reduce pollution. 
+        They also deliver impressive speed with instant torque, making acceleration smooth and exciting. Plus, electric cars 
+        offer a quiet and comfortable ride, combining eco-friendliness with modern performance and luxury.</p>
+    <p>Here are some popular electric cars that combine innovation, performance, and sustainability.</p>
+    <div>
+        <ul>
+            {% for key, value in vehicle10.items() %}
+            <li>{{ key|capitalize }}: {{ value }}</li>
+            {% endfor %}
+        </ul>
+        <div>
+            {% for img in tes %}
+                <img src="{{ url_for('static', filename=img) }}">
+            {% endfor %}
+        </div>
+    </div>
+    <div>
+        <ul>
+            {% for key, value in vehicle11.items() %}
+            <li>{{ key|capitalize }}: {{ value }}</li>
+            {% endfor %}
+        </ul>
+        <div>
+            {% for img in bmw %}
+                <img src="{{ url_for('static', filename=img) }}">
+            {% endfor %}
+        </div>
+    </div>
+    <div>
+        <ul>
+            {% for key, value in vehicle12.items() %}
+            <li>{{ key|capitalize }}: {{ value }}</li>
+            {% endfor %}
+        </ul>
+        <div>
+            {% for img in ren %}
+                <img src="{{ url_for('static', filename=img) }}">
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+    <footer>{{ super() }}</footer>
+{% endblock %}
