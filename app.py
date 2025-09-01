@@ -3,6 +3,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import JSON, select
 from datetime import timedelta
+import json
+from collections import defaultdict
 
 app = Flask(__name__)
 app.secret_key = 'sc2313ggdfg4454309hkfdjsfvbgdzamop'
@@ -105,18 +107,11 @@ def logout():
 
 @app.context_processor
 def images_to_page():
-    brands = {
-        'skoda': 1, 'vw': 2, 'audi': 3, 'rr': 4, 'toya': 5,
-        'jeep': 6, 'ferr': 7, 'ast': 8, 'mc': 9, 'tes': 10,
-        'bmw': 11, 'ren': 12, 'hatchback': 13, 'suv': 14, 
-        'supercar': 15, 'electric': 16
-    }
-    images = {}
-    for brand, img_id in brands.items():
-        image_obj = Images.query.get(img_id)
-        if image_obj:
-            images[brand] = image_obj.image_file_path
-    return images
+    all_images = Images.query.all()
+    images = defaultdict(list)
+    for img in all_images:
+        images[img.image_name].extend(img.image_file_path)
+    return dict(images=dict(images))
 
 
 @app.context_processor
@@ -131,10 +126,8 @@ def context_processor():
 
 @app.route('/')
 def home():
-    db_image = Images.query.get(13)
-    bg_image = db_image.image_file_path
     if 'email' in session:
-        return render_template('index.html', bg_image=bg_image)
+        return render_template('index.html')
     return redirect(url_for('login'))
 
 
@@ -151,7 +144,7 @@ def car_conditional(car_type):
         return redirect(url_for('login'))
     
     if car_type == 'hatchback':
-        return render_template('car_hatch.html', car_type=car_type)
+        return render_template('car_hatch.html', car_type=car_type, images_to_page=images_to_page())
     elif car_type == 'suv':
         return render_template('car_suv.html', car_type=car_type)
     elif car_type == 'supercar':
@@ -160,11 +153,6 @@ def car_conditional(car_type):
         return render_template('car_electric.html', car_type=car_type)
     else:
         return redirect(url_for('show_car_type'))
-
-# To do:
-    # Do the CSS styling too - think about some buttons and interactivity with JavaScript
-        # Loop through pictures next to the description of each car
-
 
 
 

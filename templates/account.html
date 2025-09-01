@@ -7,6 +7,8 @@
         <h1 class="account-header">Account Details</h1>
 {% endblock %}
 
+{% block main %}{% endblock %}
+
 {% block content %}
         <div class="account-content">
             <p>Here you can update your email and password for your account</p>
@@ -19,7 +21,7 @@
                     <label for="password">Password:</label>
                     <input type="password" id="password" name="password" required>
                 </div>
-                <button type="submit">Update</button>
+                <button class="logging-button" type="submit">Update</button>
             </form>
         </div>
     </div>

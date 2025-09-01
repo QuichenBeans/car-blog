@@ -7,6 +7,8 @@
         <h1 class="account-header">Login To The Site</h1>
 {% endblock %}
 
+{% block main %}{% endblock %}
+
 {% block content %}
         <div class="account-content">
             <p>To gain access to the site please login below</p>
@@ -19,7 +21,7 @@
                     <label for="password">Password:</label>
                     <input type="password" id="password" name="password" required>
                 </div>
-                <button type="submit">Login</button>
+                <button class="logging-button" type="submit">Login</button>
             </form>
             <div class="additional-links">
                 <a href="#">Forgot Password?</a>

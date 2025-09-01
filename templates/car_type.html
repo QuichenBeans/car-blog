@@ -8,6 +8,8 @@
     </header>
 {% endblock %}
 
+{% block main %}{% endblock %}
+
 {% block content %}
 <div class="car-type-content">
     <p>
@@ -25,7 +27,7 @@
     <div class="car-card">
         <a href="{{ url_for('car_conditional', car_type='hatchback') }}">
             <div class="image-container">
-                {% for img in hatchback %}
+                {% for img in images.hatchback %}
                     <img class="car-image" src="{{ url_for('static', filename=img) }}">
                 {% endfor %}
                 <h3 class="overlay-text">Hatchbacks</h3>
@@ -35,7 +37,7 @@
     <div class="car-card">
         <a href="{{ url_for('car_conditional', car_type='suv') }}">
             <div class="image-container">
-                {% for img in suv %}
+                {% for img in images.suv %}
                     <img class="car-image" src="{{ url_for('static', filename=img) }}">
                 {% endfor %}
                 <h3 class="overlay-text">SUVs</h3>
@@ -45,7 +47,7 @@
     <div class="car-card">
         <a href="{{ url_for('car_conditional', car_type='supercar') }}">
             <div class="image-container">
-                {% for img in supercar %}
+                {% for img in images.supercar %}
                     <img class="car-image" src="{{ url_for('static', filename=img) }}">
                 {% endfor %}
                 <h3 class="overlay-text">Supercars</h3>
@@ -55,7 +57,7 @@
     <div class="car-card">
         <a href="{{ url_for('car_conditional', car_type='electric') }}">
             <div class="image-container">
-                {% for img in electric %}
+                {% for img in images.electric %}
                     <img class="car-image" src="{{ url_for('static', filename=img) }}">
                 {% endfor %}
                 <h3 class="overlay-text">Electric Cars</h3>
@@ -67,4 +69,11 @@
 
 {% block footer %}
     <footer>{{ super() }}</footer>
+{% endblock %}
+
+{% block script %}
+    <script>
+        const car_type_images = JSON.parse('{{ images | tojson | safe }}');
+    </script>
+    {{ super() }}
 {% endblock %}

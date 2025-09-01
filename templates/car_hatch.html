@@ -3,57 +3,79 @@
 {% block title %}Hatchbacks{% endblock %}
 
 {% block header %}
-    <h1>Compact & Cool: The Best in Hatchbacks</h1>
+    <h1 class="car-type-header">Compact & Cool: The Best in Hatchbacks</h1>
 {% endblock %}
+
+{% block main %}{% endblock %}
 
 {% block nav_extra %}{% endblock %}
 
 {% block content %}
 <div>
-    <p>Compact, versatile, and full of personality—hatchbacks are the perfect blend of practicality and fun. 
-        Whether you're navigating city streets, looking for great fuel efficiency, or simply love a sporty yet practical ride, hatchbacks deliver on all fronts. 
-        Here, we explore the best models, latest trends, and why these nimble cars continue to win hearts worldwide. 
-        Buckle up and discover your perfect hatchback match!</p>
-    <p>Here is a list of Hatchbacks that could be your next one!</p>
-    <div>
+    <div class="car-type-content">
+        <p>Compact, versatile, and full of personality—hatchbacks are the perfect blend of practicality and fun. 
+            Whether you're navigating city streets, looking for great fuel efficiency, or simply love a sporty yet practical ride, hatchbacks deliver on all fronts. 
+            Here, we explore the best models, latest trends, and why these nimble cars continue to win hearts worldwide. 
+            Buckle up and discover your perfect hatchback match!</p>
+    </div>
+    <div class="car-type-content2">
+        <p>Here is a list of Hatchbacks that could be your next one!</p>
+    </div>
+    <div class="car-info-pic">
         <ul>
             {% for key, value in vehicle1.items() %}
             <li>{{ key|capitalize }}: {{ value }}</li>
             {% endfor %}
         </ul>
-        <div>
-            {% for img in skoda %}
-                <img src="{{ url_for('static', filename=img) }}">
+        <div id="image_carousel_container">
+            {% for img in images.skoda %}
+                <img class="carousel_image" src="{{ url_for('static', filename=img) }}">
             {% endfor %}
         </div>
     </div>
-    <div>
+    <div class="controls2">
+        <button class="next2"><</button>
+        <button class="previous2">></button>
+    </div>
+    <div class="car-info-pic">
         <ul>
             {% for key, value in vehicle2.items() %}
             <li>{{ key|capitalize }}: {{ value }}</li>
             {% endfor %}
         </ul>
-        <div>
-            {% for img in vw %}
-                <img src="{{ url_for('static', filename=img) }}">
+        <div id="image_carousel_container">
+            {% for img in images.vw %}
+                <img class="carousel_image" src="{{ url_for('static', filename=img) }}">
             {% endfor %}
         </div>
     </div>
-    <div>
+    <div class="controls2">
+        <button class="next2"><</button>
+        <button class="previous2">></button>
+    </div>
+    <div class="car-info-pic">
         <ul>
             {% for key, value in vehicle3.items() %}
             <li>{{ key|capitalize }}: {{ value }}</li>
             {% endfor %}
         </ul>
-        <div>
-            {% for img in audi %}
-                <img src="{{ url_for('static', filename=img) }}">
+        <div id="image_carousel_container">
+            {% for img in images.audi %}
+                <img class="carousel_image" src="{{ url_for('static', filename=img) }}">
             {% endfor %}
         </div>
+    </div>
+    <div class="controls2">
+        <button class="next2"><</button>
+        <button class="previous2">></button>
     </div>
 </div>
 {% endblock %}
 
 {% block footer %}
     <footer>{{ super() }}</footer>
+{% endblock %}
+
+{% block script %}
+    {{ super() }}
 {% endblock %}

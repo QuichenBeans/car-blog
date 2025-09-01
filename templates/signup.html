@@ -7,6 +7,8 @@
         <h1 class="account-header">Registration</h1>
 {% endblock %}
 
+{% block main %}{% endblock %}
+
 {% block content %}
         <div class="account-content">
             <p>Please enter an email and password to register</p>
@@ -19,7 +21,7 @@
                     <label for="password">Password:</label>
                     <input type="password" id="password" name="password" required>
                 </div>
-                <button type="submit">Sign up</button>
+                <button class="logging-button" type="submit">Sign up</button>
             </form>
         </div>
     </div>
