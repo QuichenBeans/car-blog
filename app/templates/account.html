@@ -1,0 +1,54 @@
+{% extends 'index.html' %}
+
+<title>{% block title %}Account details{% endblock %}</title>
+
+{% block header %}
+    <div class="account-container">
+        <h1 class="account-header">Account Details</h1>
+{% endblock %}
+
+{% block nav %}
+    {{ super() }}
+{% endblock %}
+
+{% block main %}{% endblock %}
+
+{% block content %}
+        <div class="account-content">
+            <p>Here you can update your email and password for your account</p>
+            <form action="{{ url_for('main.account') }}" method="POST">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    {{ form.email.label }}
+                    {{ form.email(class="form-control", id="email") }}
+                    {% if form.email.errors %}
+                        <div class="error-message">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.password.label }}
+                    {{ form.password(class="form-control", id="password", placeholder="Leave blank to keep current password") }}
+                    {% if form.password.errors %}
+                        <div class="error-message">
+                            {% for error in form.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <button class="logging-button" type="submit">
+                    {{ form.submit.label.text }}
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {{ super() }}
+{% endblock %}

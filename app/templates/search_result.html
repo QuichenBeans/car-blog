@@ -1,0 +1,39 @@
+{% extends 'index.html' %}
+
+<title>{% block title %}Search{% endblock %}</title>
+
+{% block header %}
+    <div class="search-container">
+        <h1 class="search-header">Search Cars</h1>
+{% endblock %}
+
+{% block main %}{% endblock %}
+
+{% block content %}
+        <div class="search-content">
+            <p>Please enter car names to search through the car catalogue</p>
+            <div class="form-group-search">
+                <label for="search"></label>
+                <input type="text" id="search" name="search" required placeholder="Search 'audi' or 'ferrari'">
+            </div>
+            <div class="car-list-card">
+                <ul id="carData">
+                    <li></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {{ super() }}
+{% endblock %}
+
+{% block script %}
+    <script>
+        const carObj = JSON.parse('{{ car_vars | tojson | safe }}');
+        const carImages = JSON.parse('{{ images | tojson | safe }}');
+        const allInfo = JSON.parse('{{ all_info | tojson | safe }}');
+    </script>
+    {{ super() }}
+{% endblock %}

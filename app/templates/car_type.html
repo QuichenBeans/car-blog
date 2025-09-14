@@ -1,0 +1,84 @@
+{% extends 'index.html' %}
+
+<title>{% block title %}Types of Car{% endblock %}</title>
+
+{% block header %}
+    <header>
+        <h1 class="car-type-header">From Beaters to Bentleys: Car Types Unpacked</h1>
+    </header>
+{% endblock %}
+
+{% block nav %}
+    {{ super() }}
+{% endblock %}
+
+{% block main %}{% endblock %}
+
+{% block content %}
+<div class="car-type-content">
+    <p>
+    From rugged SUVs built for adventure, to compact hatchbacks perfect for city streets, 
+    the world of cars offers something for every driver’s needs and style. Electric cars are reshaping the road 
+    with quiet efficiency and zero emissions, while sleek supercars push the limits of speed and engineering.
+    Add to that versatile sedans, practical pickup trucks, and even quirky microcars, and you have a 
+    diverse automotive landscape that blends performance, comfort, and innovation in endless combinations.
+    </p>
+</div>
+{% endblock %}
+
+{% block nav_extra %}
+<div class="car_selection">
+    <div class="car-card">
+        <a href="{{ url_for('main.car_conditional', car_type='hatchback') }}">
+            <div class="image-container">
+                {% for img in images.hatchback %}
+                    <img class="car-image" src="{{ url_for('static', filename=img) }}">
+                {% endfor %}
+                <h3 class="overlay-text">Hatchbacks</h3>
+            </div>
+        </a>
+    </div>
+    <div class="car-card">
+        <a href="{{ url_for('main.car_conditional', car_type='suv') }}">
+            <div class="image-container">
+                {% for img in images.suv %}
+                    <img class="car-image" src="{{ url_for('static', filename=img) }}">
+                {% endfor %}
+                <h3 class="overlay-text">SUVs</h3>
+            </div>
+        </a>
+    </div>
+    <div class="car-card">
+        <a href="{{ url_for('main.car_conditional', car_type='supercar') }}">
+            <div class="image-container">
+                {% for img in images.supercar %}
+                    <img class="car-image" src="{{ url_for('static', filename=img) }}">
+                {% endfor %}
+                <h3 class="overlay-text">Supercars</h3>
+            </div>
+        </a>
+    </div>
+    <div class="car-card">
+        <a href="{{ url_for('main.car_conditional', car_type='electric') }}">
+            <div class="image-container">
+                {% for img in images.electric %}
+                    <img class="car-image" src="{{ url_for('static', filename=img) }}">
+                {% endfor %}
+                <h3 class="overlay-text">Electric Cars</h3>
+            </div>
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+    <footer>{{ super() }}</footer>
+{% endblock %}
+
+{% block script %}
+    <script>
+        const car_type_images = JSON.parse('{{ images | tojson | safe }}');
+        const carList = JSON.parse('{{ car_vars | tojson | safe }}');
+    </script>
+    {{ super() }}
+{% endblock %}

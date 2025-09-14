@@ -1,0 +1,65 @@
+{% extends 'index.html' %}
+
+<title>{% block title %}Account details{% endblock %}</title>
+
+{% block header %}
+    <div class="account-container">
+        <h1 class="account-header">Registration</h1>
+{% endblock %}
+
+{% block nav %}
+{% endblock %}
+
+{% block main %}{% endblock %}
+
+{% block content %}
+        <div class="account-content">
+            <p>Please enter an email and password to register</p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            
+            <form action="{{ url_for('main.signup') }}" method="POST">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    {{ form.email.label }}
+                    {{ form.email(class="form-control", id="email") }}
+                    {% if form.email.errors %}
+                        <div class="error-message">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.password.label }}
+                    {{ form.password(class="form-control", id="password") }}
+                    {% if form.password.errors %}
+                        <div class="error-message">
+                            {% for error in form.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <button class="logging-button" type="submit">
+                    {{ form.submit.label.text }}
+                </button>
+            </form>
+            <div class="additional-links">
+                <a href="{{ url_for('main.login') }}">Back to Login</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
