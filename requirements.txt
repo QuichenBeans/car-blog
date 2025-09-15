@@ -1,0 +1,8 @@
+flask
+flask-wtf
+wtforms
+flask-sqlalchemy
+flask-mail
+python-dotenv
+werkzeug
+gunicorn

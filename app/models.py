@@ -1,4 +1,3 @@
-from flask_sqlalchemy import SQLAlchemy
 from flask import current_app
 from app import db
 from datetime import datetime, timedelta
