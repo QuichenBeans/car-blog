@@ -5,4 +5,5 @@ flask-sqlalchemy
 flask-mail
 python-dotenv
 werkzeug
+email_validator>=2.0
 gunicorn
