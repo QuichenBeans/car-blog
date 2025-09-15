@@ -72,6 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
 const searchInput = document.getElementById('search')
 const resultsContainer = document.getElementById('carData')
 
+// When user types will search cars in database, if what is typed doesn't match the title or description from the db
+// then nothing with show
 searchInput.addEventListener('input', e => {
     const value = e.target.value.toLowerCase()
     if (value === "") {

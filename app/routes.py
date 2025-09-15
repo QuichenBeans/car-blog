@@ -35,17 +35,22 @@ class SignupForm(FlaskForm):
     submit = SubmitField('Signup')
 
 
+# Route for signing up a new user
 @main_bp.route('/signup', methods=['POST', 'GET'])
 def signup():
     form = SignupForm()
+    # If the user submitted the form and it passed validation
     if request.method == 'POST' and form.validate_on_submit():
         email = request.form.get('email')
         password = request.form.get('password')
 
+        # Check if a user with this email already exists
         user = Users.query.filter_by(email=email).first()
         if user:
             flash('User already exists, try again')
             return redirect(url_for('main.signup'))
+        
+        # Create new user with hashed password for security
         new_user = Users(email=email, password=generate_password_hash(password, method='pbkdf2:sha256'))
         db.session.add(new_user)
         db.session.commit()
@@ -53,19 +58,25 @@ def signup():
         flash('Registration successful, logging you in')
         return redirect(url_for('main.home'))
         
+    # If GET request, just show the signup form
     return render_template('signup.html', form=form)
 
 
+# Route for logging in an existing user
 @main_bp.route('/login', methods=['POST', 'GET'])
 def login():
     form = LoginForm()
     if request.method == 'POST' and form.validate_on_submit():
-        session.permanent = True
+        session.permanent = True  # Make session persistent
         email = request.form['email']
         password = request.form['password']
+
+        # Find user with given email
         user = Users.query.filter_by(email=email).first()
+
+        # If user exists and password is correct
         if user and check_password_hash(user.password, password):
-            session['email'] = email
+            session['email'] = email  # Store email in session to keep user logged in
             flash('Login successful!', 'success')
             return redirect(url_for('main.home'))
         else:
@@ -74,52 +85,67 @@ def login():
     return render_template('login.html', form=form)
 
     
+# Route for user account management (update email/password)
 @main_bp.route('/account', methods=['POST', 'GET'])
 def account():
+    # Require login
     if 'email' not in session:
         return redirect(url_for('main.login'))
+
     form = AccountForm()
     user = Users.query.filter_by(email=session['email']).first()
+
     if request.method == 'POST' and form.validate_on_submit():
         new_email = request.form.get('email')
         new_password = request.form.get('password')
+
+        # If user wants to change email
         if new_email:
+            # Check if email is already taken
             if Users.query.filter(Users.email == new_email).first():
                 return redirect(url_for('account'))
             user.email = new_email
-            session['email'] = new_email
-            if new_password:
-                user.password = generate_password_hash(new_password, method='pbkdf2:sha256')
+            session['email'] = new_email  # Update session as well
+        
+        # If user wants to change password
+        if new_password:
+            user.password = generate_password_hash(new_password, method='pbkdf2:sha256')
+        
+        # Changes will be committed automatically when the request ends or can be explicitly committed here
         return redirect(url_for('main.home'))
     return render_template('account.html', form=form)
 
+
+# Utility function to send password reset email
 def send_mail(user):
-    token = user.get_token()
+    token = user.get_token()  # Generate a secure token for password reset
     msg = Message('Password Reset Request', recipients=[user.email], sender='noreply@quicheandbeans.com')
     msg.body = f''' To reset your password, please click the link below.
     
     {url_for('reset_token', token=token, _external=True)}
 
     If you did not send a password reset request, please ignore this message.
-
     '''
     mail.send(msg)
 
+
+# Route to request a password reset email
 @main_bp.route('/reset_password', methods=['POST', 'GET'])
 def reset_password():
     form = ResetRequestForm()
     if form.validate_on_submit():
         user = Users.query.filter_by(email=form.email.data).first()
         if user:
-            send_mail(user)
+            send_mail(user)  # Send reset link if user exists
         flash('A reset link has been sent to your email.', 'success')
         return redirect(url_for('main.login'))
     return render_template('reset_password.html', form=form)
 
 
+# Route to actually reset password using the token from the email
 @main_bp.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_token(token):
-    user = Users.verify_token(token)
+    user = Users.verify_token(token)  # Validate token and get user
     if user is None:
         flash('That is an invalid token or token has expired.', 'warning')
         return redirect(url_for('main.reset_password'))
@@ -135,12 +161,14 @@ def reset_token(token):
     return render_template('change_password.html', form=form, token=token)
     
 
+# Route to log out user
 @main_bp.route('/logout')
 def logout():
-    session.pop('email', None)
+    session.pop('email', None)  # Remove user from session
     return redirect(url_for('main.login'))
 
 
+# Route to show search results (requires login)
 @main_bp.route('/search_result')
 def search_result():
     if 'email' not in session:
@@ -148,6 +176,7 @@ def search_result():
     return render_template('search_result.html')
     
 
+# Home page (requires login)
 @main_bp.route('/')
 def home():
     if 'email' not in session:
@@ -155,7 +184,7 @@ def home():
     return render_template('index.html')
     
 
-
+# Show car types page (requires login)
 @main_bp.route('/car_type')
 def show_car_type():
     if 'email' not in session:
@@ -163,11 +192,13 @@ def show_car_type():
     return render_template('car_type.html')
 
 
+# Show car page depending on car type selected (requires login)
 @main_bp.route('/car_type/<car_type>')
 def car_conditional(car_type):
     if 'email' not in session:
         return redirect(url_for('main.login'))
     
+    # Render different templates depending on the car_type provided
     if car_type == 'hatchback':
         return render_template('car_hatch.html', car_type=car_type)
     elif car_type == 'suv':
@@ -177,5 +208,5 @@ def car_conditional(car_type):
     elif car_type == 'electric':
         return render_template('car_electric.html', car_type=car_type)
     else:
+        # If unknown car_type, redirect back to car types list
         return redirect(url_for('main.show_car_type'))
-
