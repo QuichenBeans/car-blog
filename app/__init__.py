@@ -1,17 +1,19 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
-from extensions import db, mail, csrf
+from extensions import db, mail
 from app.models import Cars, Images, Title_info
 from collections import defaultdict
-from sqlalchemy import JSON, select
+from sqlalchemy import select
 from dotenv import load_dotenv
+from flask_wtf import CSRFProtect
 
 load_dotenv()
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
+    app.config['SECRET_KEY'] = os.getenv("SECRET_KEY", "dev-secret-key")
+    csrf = CSRFProtect(app)
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI", "sqlite:///data.db")
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
